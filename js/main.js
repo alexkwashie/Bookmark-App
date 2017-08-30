@@ -1,38 +1,55 @@
-//listen for form submit
+// Listen for form submit
+document.getElementById('myForm').addEventListener('submit', saveBookmark);
 
-document.getElementById('myForm').addEventListener('submit', saveBooking);
+// Save Bookmark
+function saveBookmark(e){
+  // Get form values
+  var siteName =document.getElementById('siteName').value;
+  var siteUrl =document.getElementById('siteUrl').value;
 
-//Save bookmark
-function saveBooking(e){
-var siteName = document.getElementById('siteName').value;
-var siteU = document.getElementById('siteUrl').value;
+  var bookmark = {
+    name: siteName,
+    url: siteUrl
+  }
 
-var bookmark = {
-name: siteName,
-Url: siteU
+  /*
+    // Local Storage Test
+    localStorage.setItem('test', 'Hello World');
+    console.log(localStorage.getItem('test'));
+    localStorage.removeItem('test');
+    console.log(localStorage.getItem('test'));
+  */
+
+  // Test if bookmarks is null
+  if(localStorage.getItem('bookmarks') === null){
+    // Init array
+    var bookmarks = [];
+    // Add to array
+    bookmarks.push(bookmark);
+    // Set to localStorage and convt to a JSON string
+    localStorage.setItem('bookmarks', JSON.stringify(bookmarks));
+  } else {
+    // Get bookmarks from localStorage & convt back to a normal string
+    var bookmarks = JSON.parse(localStorage.getItem('bookmarks'));
+    // Add bookmark to array
+    bookmarks.push(bookmark);
+    // Re-set back to localStorage
+    localStorage.setItem('bookmarks', JSON.stringify(bookmarks));
+  }
+
+  // Clear form
+  document.getElementById('myForm').reset();
+
+  // Prevent form from submitting
+  e.preventDefault();
 }
 
-/*
-//local storage test
-localStorage.setItem('test', 'Newfile');
-console.log(localStorage.getItem('test'));
-localStorage.removeItem('test');
-console.log(localStorage.getItem('test'));
-*/
+//fetch Bookmark
+function fetchBookmarks(){
+  //Get bookmarks from localStorage
+  var bookmarks = JSON.parse(localStorage.getItem('bookmarks'));
+//Get output Id from html
+  var bookmarkResults = document.getElementById('bookmarksResults');
 
-//Test if bookmark is null
-if (localStorage.getItem('bookmarks') === null){
-//initiate array
-  var bookmarks = [];
-// this adds to bookmark to the array from
-localStorage.push('bookmark');
-//Set to local storage and changes the set up to  string
-localStorage.setItem('bookmarks', JSON.stringify(bookmark));
-
-
-
-}
-//prevent form from submitting
-e.preventDefault();
-
+  JSON.stringify()
 }
